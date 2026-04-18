@@ -1,0 +1,41 @@
+{
+  "sale": {
+    "enabled": true,
+    "discount_percent": 30,
+    "banner_title": "🎉 Grand Opening Sale!",
+    "banner_subtitle": "30% OFF on ALL products — Limited Time Only!",
+    "banner_cta": "Shop Now & Save Big"
+  },
+  "products": [
+    { "id": 1,  "name": "English Willow Bat — Grade 1",        "price": 4500 },
+    { "id": 2,  "name": "English Willow Bat — Grade 2",        "price": 3200 },
+    { "id": 3,  "name": "Kashmir Willow Bat — Pro",            "price": 1800 },
+    { "id": 4,  "name": "Kashmir Willow Bat — Junior",         "price": 950  },
+    { "id": 5,  "name": "Tape Ball Bat",                       "price": 650  },
+    { "id": 6,  "name": "Tennis Ball Bat",                     "price": 550  },
+    { "id": 7,  "name": "Leather Cricket Ball — Red",          "price": 480  },
+    { "id": 8,  "name": "Leather Cricket Ball — White",        "price": 480  },
+    { "id": 9,  "name": "Leather Cricket Ball — Pink",         "price": 520  },
+    { "id": 10, "name": "Tennis Ball — Heavy",                 "price": 120  },
+    { "id": 11, "name": "Synthetic Practice Ball",             "price": 95   },
+    { "id": 12, "name": "Batting Gloves — Senior",             "price": 750  },
+    { "id": 13, "name": "Batting Gloves — Junior",             "price": 480  },
+    { "id": 14, "name": "Wicket Keeping Gloves",               "price": 1200 },
+    { "id": 15, "name": "Thigh Pad",                           "price": 380  },
+    { "id": 16, "name": "Knee Pad (Pair)",                     "price": 620  },
+    { "id": 17, "name": "Arm Guard",                           "price": 280  },
+    { "id": 18, "name": "Abdominal Guard (Box)",               "price": 220  },
+    { "id": 19, "name": "Helmet — Senior",                     "price": 1850 },
+    { "id": 20, "name": "Helmet — Junior",                     "price": 1100 },
+    { "id": 21, "name": "Cricket Bag — Kit Bag (Duffle)",      "price": 1450 },
+    { "id": 22, "name": "Cricket Bag — Wheelie Bag",           "price": 2800 },
+    { "id": 23, "name": "Batting Pads — Senior",               "price": 1100 },
+    { "id": 24, "name": "Batting Pads — Junior",               "price": 680  },
+    { "id": 25, "name": "Batting Grip (Replacement)",          "price": 60   },
+    { "id": 26, "name": "Grip Cone",                           "price": 35   },
+    { "id": 27, "name": "Batting Tee",                         "price": 180  },
+    { "id": 28, "name": "Cricket Spikes — Rubber Sole",        "price": 1250 },
+    { "id": 29, "name": "Cricket Spikes — Metal Sole",         "price": 1700 },
+    { "id": 30, "name": "Starter Cricket Kit",                 "price": 3200 }
+  ]
+}
