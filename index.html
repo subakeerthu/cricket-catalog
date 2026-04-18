@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SPM Cricket Cricket — Product Catalog</title>
+<title>SPMPro Cricket — Product Catalog</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -195,14 +195,74 @@
     transform: translateY(-6px);
     box-shadow: 0 20px 50px rgba(26,92,46,0.15);
   }
+  /* CARD IMAGE / MINI SLIDER */
   .card-img {
-    height: 180px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+    cursor: pointer;
+  }
+  .card-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  }
+  .card-slide {
+    min-width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 5rem;
-    position: relative;
-    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .card-slide img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-slide.emoji-slide { font-size: 5rem; }
+  .card-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45);
+    color: white;
+    border: none;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card-img:hover .card-arrow { opacity: 1; }
+  .card-arrow.prev { left: 8px; }
+  .card-arrow.next { right: 8px; }
+  .card-dots {
+    position: absolute;
+    bottom: 8px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 5px;
+    z-index: 5;
+  }
+  .card-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .card-dot.active { background: white; transform: scale(1.3); }
+  .card-img-count {
+    position: absolute;
+    bottom: 8px; right: 10px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 10px;
+    z-index: 5;
   }
   .card-badge {
     position: absolute;
@@ -215,6 +275,103 @@
     text-transform: uppercase;
     padding: 3px 8px;
     border-radius: 4px;
+    z-index: 5;
+  }
+
+  /* MODAL GALLERY */
+  .modal-gallery {
+    position: relative;
+    background: var(--dark);
+    overflow: hidden;
+  }
+  .gallery-track-wrap {
+    overflow: hidden;
+    width: 100%;
+  }
+  .gallery-track {
+    display: flex;
+    transition: transform 0.38s cubic-bezier(.4,0,.2,1);
+  }
+  .gallery-slide {
+    min-width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    font-size: 8rem;
+    flex-shrink: 0;
+  }
+  .gallery-slide img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .gallery-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+  }
+  .gallery-arrow:hover { background: rgba(255,255,255,0.3); }
+  .gallery-arrow.prev { left: 12px; }
+  .gallery-arrow.next { right: 12px; }
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0 6px;
+    background: var(--dark);
+  }
+  .gallery-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .gallery-dot.active { background: var(--lime); transform: scale(1.4); }
+  .gallery-thumbs {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px 12px;
+    background: var(--dark);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .gallery-thumbs::-webkit-scrollbar { display: none; }
+  .gallery-thumb {
+    width: 52px; height: 52px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.08);
+    font-size: 1.6rem;
+  }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-thumb.active { border-color: var(--lime); }
+  .gallery-counter {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    z-index: 10;
   }
   .card-body { padding: 20px; }
   .card-category {
@@ -244,16 +401,108 @@
     border-top: 1px solid #f0f0f0;
     padding-top: 14px;
   }
-  .card-price {
+  /* SALE BANNER */
+  .sale-banner {
+    background: linear-gradient(90deg, #b91c1c 0%, #dc2626 40%, #b91c1c 100%);
+    color: white;
+    text-align: center;
+    padding: 14px 24px;
+    position: relative;
+    overflow: hidden;
+    animation: bannerPulse 3s ease-in-out infinite;
+  }
+  @keyframes bannerPulse {
+    0%, 100% { background: linear-gradient(90deg, #b91c1c 0%, #dc2626 40%, #b91c1c 100%); }
+    50%       { background: linear-gradient(90deg, #dc2626 0%, #ef4444 40%, #dc2626 100%); }
+  }
+  .sale-banner::before, .sale-banner::after {
+    content: '🏏';
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    font-size: 1.5rem;
+    opacity: 0.3;
+  }
+  .sale-banner::before { left: 24px; }
+  .sale-banner::after  { right: 24px; }
+  .sale-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+  .sale-banner-sub {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 2px;
+    font-weight: 300;
+  }
+  .sale-banner-cta {
+    display: inline-block;
+    margin-top: 8px;
+    background: white;
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    animation: ctaBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes ctaBounce {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05); }
+  }
+
+  /* PRICE — SPMTHROUGH + SALE */
+  .card-price { display: flex; flex-direction: column; gap: 1px; }
+  .price-original {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+  .price-sale {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.4rem;
-    color: var(--green);
+    color: #dc2626;
+    line-height: 1;
   }
-  .card-price span {
+  .price-tag {
     font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    width: fit-content;
+  }
+  /* Modal price */
+  .modal-price-wrap { margin-top: 6px; }
+  .modal-price-original {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: line-through;
+  }
+  .modal-price-sale {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #fca5a5;
+    line-height: 1;
+  }
+  .modal-price-tag {
+    display: inline-block;
+    background: #dc2626;
+    color: white;
     font-size: 0.75rem;
-    color: var(--gray);
-    font-weight: 300;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-top: 4px;
   }
   .card-btn {
     background: var(--green);
@@ -287,20 +536,18 @@
     width: 100%;
     overflow: hidden;
     animation: popIn 0.25s ease;
+    max-height: 92vh;
+    overflow-y: auto;
   }
   @keyframes popIn {
     from { transform: scale(0.9); opacity: 0; }
     to   { transform: scale(1); opacity: 1; }
   }
   .modal-header {
-    padding: 40px 40px 24px;
+    padding: 20px 40px 24px;
     background: linear-gradient(135deg, var(--dark), var(--green));
     color: white;
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
   }
-  .modal-icon { font-size: 4rem; line-height: 1; }
   .modal-meta .cat {
     font-size: 0.7rem; letter-spacing: 2px;
     text-transform: uppercase; color: var(--lime); margin-bottom: 4px;
@@ -383,16 +630,17 @@
     .hero-stats { gap: 24px; }
     .search-bar { padding: 16px 24px; }
     .main { padding: 32px 20px; }
-    .modal-header { flex-direction: column; padding: 28px 24px 16px; }
     .modal-body, .modal-footer { padding-left: 24px; padding-right: 24px; }
+    .modal-header { padding: 16px 24px 20px; }
     .specs { grid-template-columns: 1fr; }
+    .gallery-slide { height: 220px; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Strike<span>Pro</span> Cricket</div>
+  <div class="logo">SPM<span>Pro</span> Cricket</div>
   <nav id="catNav">
     <button class="active" onclick="filterCat('All', this)">All Products</button>
     <button onclick="filterCat('Bats', this)">Bats</button>
@@ -402,6 +650,12 @@
     <button onclick="filterCat('Kits', this)">Kits</button>
   </nav>
 </header>
+
+<div class="sale-banner" id="saleBanner" style="display:none">
+  <div class="sale-banner-title" id="bannerTitle"></div>
+  <div class="sale-banner-sub" id="bannerSub"></div>
+  <div class="sale-banner-cta" id="bannerCta"></div>
+</div>
 
 <section class="hero">
   <p class="hero-eyebrow">🏏 Official Product Catalog 2024</p>
@@ -425,19 +679,30 @@
 </main>
 
 <footer>
-  <strong>StrikePro Cricket</strong> &nbsp;·&nbsp; Quality Equipment for Every Cricketer<br>
+  <strong>SPMPro Cricket</strong> &nbsp;·&nbsp; Quality Equipment for Every Cricketer<br>
   <small>For bulk orders & enquiries, contact us directly.</small>
 </footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
+    <!-- GALLERY -->
+    <div class="modal-gallery">
+      <div class="gallery-track-wrap">
+        <div class="gallery-track" id="galleryTrack"></div>
+      </div>
+      <button class="gallery-arrow prev" id="gPrev" onclick="shiftGallery(-1)">&#8592;</button>
+      <button class="gallery-arrow next" id="gNext" onclick="shiftGallery(1)">&#8594;</button>
+      <div class="gallery-counter" id="gCounter"></div>
+      <div class="gallery-dots" id="gDots"></div>
+    </div>
+    <div class="gallery-thumbs" id="gThumbs"></div>
+    <!-- META -->
     <div class="modal-header">
-      <div class="modal-icon" id="mIcon"></div>
-      <div class="modal-meta">
+      <div class="modal-meta" style="width:100%">
         <div class="cat" id="mCat"></div>
         <h2 id="mName"></h2>
-        <div class="modal-price" id="mPrice"></div>
+        <div class="modal-price-wrap" id="mPrice"></div>
       </div>
     </div>
     <div class="modal-body">
@@ -454,133 +719,377 @@
 </div>
 
 <script>
+// ─── CONFIG LOADER ────────────────────────────────────────────────────────────
+// Reads prices & sale settings from config.json
+// To change any price or toggle the sale, just edit config.json — no HTML changes needed!
+
+let saleConfig = { enabled: false, discount_percent: 0 };
+
+async function loadConfig() {
+  try {
+    const res = await fetch('config.json');
+    const config = await res.json();
+
+    saleConfig = config.sale;
+
+    // Apply sale banner
+    if (config.sale.enabled) {
+      document.getElementById('saleBanner').style.display = 'block';
+      document.getElementById('bannerTitle').textContent = config.sale.banner_title;
+      document.getElementById('bannerSub').textContent   = config.sale.banner_subtitle;
+      document.getElementById('bannerCta').textContent   = config.sale.banner_cta;
+    }
+
+    // Merge config prices into products array
+    config.products.forEach(cp => {
+      const p = products.find(x => x.id === cp.id);
+      if (p) p.originalPrice = cp.price;
+    });
+
+  } catch(e) {
+    console.warn('config.json not found — using built-in prices.');
+    // Fallback: parse built-in price strings
+    products.forEach(p => {
+      if (p.price) {
+        p.originalPrice = parseInt(p.price.replace(/[₹,]/g,''));
+      }
+    });
+  }
+  renderGrid();
+}
+
+// ─── PRICE HELPERS ────────────────────────────────────────────────────────────
+function salePrice(original) {
+  return Math.round(original * (1 - saleConfig.discount_percent / 100));
+}
+
+function fmt(n) {
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function cardPriceHTML(p) {
+  const orig = p.originalPrice;
+  if (saleConfig.enabled && orig) {
+    const sale = salePrice(orig);
+    return `
+      <div class="card-price">
+        <span class="price-tag">${saleConfig.discount_percent}% OFF</span>
+        <span class="price-original">${fmt(orig)}</span>
+        <span class="price-sale">${fmt(sale)}</span>
+      </div>`;
+  }
+  return `<div class="card-price"><span class="price-sale" style="color:var(--green)">${orig ? fmt(orig) : p.price}</span></div>`;
+}
+
+function modalPriceHTML(p) {
+  const orig = p.originalPrice;
+  if (saleConfig.enabled && orig) {
+    const sale = salePrice(orig);
+    return `
+      <span class="modal-price-original">${fmt(orig)}</span>
+      <div class="modal-price-sale">${fmt(sale)}</div>
+      <span class="modal-price-tag">🎉 ${saleConfig.discount_percent}% OFF — Grand Opening Sale</span>`;
+  }
+  return `<div class="modal-price-sale" style="color:var(--accent)">${orig ? fmt(orig) : p.price}</div>`;
+}
+
+function enquiryPrice(p) {
+  const orig = p.originalPrice;
+  if (saleConfig.enabled && orig) return `${fmt(salePrice(orig))} (${saleConfig.discount_percent}% off — was ${fmt(orig)})`;
+  return orig ? fmt(orig) : p.price;
+}
 const products = [
-  // BATS
   {id:1, name:"English Willow Bat — Grade 1", cat:"Bats", icon:"🏏", price:"₹4,500", badge:"Premium",
+   images:[], // e.g. ["images/ew-bat-1.jpg","images/ew-bat-2.jpg"]
    desc:"Hand-crafted from top-grade English willow, this bat offers exceptional performance with a full-bodied sweet spot. Ideal for hard cricket balls on grass pitches. Features a concave back profile and rounded edge for extra power.",
    specs:{Grade:"Grade 1 EW", Weight:"1.2 – 1.3 kg", Handle:"Cane core, oval", Edges:"38mm", Face:"Flat-pressed", Level:"Professional"}},
 
   {id:2, name:"English Willow Bat — Grade 2", cat:"Bats", icon:"🏏", price:"₹3,200", badge:"",
+   images:[],
    desc:"Grade 2 English willow with minor cosmetic grain variations. Same performance characteristics as Grade 1 but at a more accessible price point. Suitable for club and academy cricketers.",
    specs:{Grade:"Grade 2 EW", Weight:"1.2 – 1.3 kg", Handle:"Cane core", Edges:"36mm", Face:"Flat-pressed", Level:"Club / Academy"}},
 
   {id:3, name:"Kashmir Willow Bat — Pro", cat:"Bats", icon:"🏏", price:"₹1,800", badge:"Best Value",
+   images:[],
    desc:"Premium Kashmir willow bat with a large sweet spot and thick edges. Perfect for turf pitches and hard leather balls. Durable construction with a fibre glass handle for better shock absorption.",
    specs:{Grade:"KW Pro", Weight:"1.1 – 1.25 kg", Handle:"Fiber glass", Edges:"34mm", Face:"Flat-pressed", Level:"Intermediate"}},
 
   {id:4, name:"Kashmir Willow Bat — Junior", cat:"Bats", icon:"🏏", price:"₹950", badge:"",
+   images:[],
    desc:"Lightweight Kashmir willow bat designed for young cricketers. Balanced pick-up and comfortable grip. Available in size 3, 4, 5, and 6.",
    specs:{Sizes:"3 / 4 / 5 / 6", Weight:"0.7 – 1 kg", Handle:"Cane", Face:"Short handle", Level:"Junior (8–14 yrs)"}},
 
   {id:5, name:"Tape Ball Bat", cat:"Bats", icon:"🏏", price:"₹650", badge:"",
+   images:[],
    desc:"Specially crafted for tape-ball street cricket. Hard face, thick edges, and a lightweight profile for quick power shots. Very popular for gully cricket and evening matches.",
    specs:{Material:"Kashmir Willow", Weight:"0.9 kg", Handle:"Rubber grip", Level:"Recreational"}},
 
   {id:6, name:"Tennis Ball Bat", cat:"Bats", icon:"🏏", price:"₹550", badge:"",
+   images:[],
    desc:"Optimised for tennis ball cricket. Light weight, hard face, and wide body for maximum hitting power. Great for casual and box cricket formats.",
    specs:{Material:"Popular Wood", Weight:"0.75 kg", Handle:"Rubberized", Level:"Recreational"}},
 
-  // BALLS
   {id:7, name:"Leather Cricket Ball — Red", cat:"Balls", icon:"🔴", price:"₹480", badge:"",
+   images:[],
    desc:"Hand-stitched 4-piece red leather cricket ball. Cork core with tightly wound twine for consistent bounce and seam movement. Meets standard cricket regulations.",
    specs:{Type:"4-piece leather", Weight:"155.9 – 163 g", Circumference:"22.4 – 22.9 cm", Color:"Red", Standard:"BCCI approved grade"}},
 
   {id:8, name:"Leather Cricket Ball — White", cat:"Balls", icon:"⚪", price:"₹480", badge:"",
+   images:[],
    desc:"Premium white leather ball for limited-overs and night matches. High visibility coating with durable seam for long-lasting swing and bounce.",
    specs:{Type:"4-piece leather", Weight:"155.9 – 163 g", Color:"White", Matches:"Limited overs, T20", Standard:"BCCI approved"}},
 
   {id:9, name:"Leather Cricket Ball — Pink", cat:"Balls", icon:"🩷", price:"₹520", badge:"Day-Night",
+   images:[],
    desc:"Day-night cricket ball with special pink dye coating. Enhanced visibility under floodlights while maintaining swing and seam characteristics of a red ball.",
    specs:{Type:"4-piece leather", Weight:"155.9 – 163 g", Color:"Pink", Matches:"Day-Night Tests", Coating:"UV-resistant dye"}},
 
   {id:10, name:"Tennis Ball — Heavy", cat:"Balls", icon:"🟡", price:"₹120", badge:"",
+   images:[],
    desc:"Heavy rubber tennis ball for practice and casual cricket. Consistent bounce and suitable for hard pitches. Sold per piece.",
    specs:{Material:"Rubber", Type:"Heavy duty", Color:"Yellow / Fluorescent", Usage:"Practice / Tape-ball"}},
 
   {id:11, name:"Synthetic Practice Ball", cat:"Balls", icon:"🟠", price:"₹95", badge:"Pack of 6",
+   images:[],
    desc:"Synthetic hollow practice balls for batting drills and throwing practice. Lightweight and safe for indoor use. Sold in packs of 6.",
    specs:{Material:"PVC hollow", Weight:"Light", Pack:"6 balls", Usage:"Indoor / Practice nets"}},
 
-  // PROTECTION
-  {id:12, name:"Batting Gloves — Senior", cat:"Bats", icon:"🧤", price:"₹750", badge:"",
+  {id:12, name:"Batting Gloves — Senior", cat:"Protection", icon:"🧤", price:"₹750", badge:"",
+   images:[],
    desc:"Premium batting gloves with multi-layer foam padding across the fingers and thumb. Perforated palm for breathability. Velcro wrist strap for secure fit.",
    specs:{Size:"Senior (M / L / XL)", Material:"Leather palm, foam fingers", Padding:"Multi-layer foam", Palm:"Perforated leather"}},
 
-  {id:13, name:"Batting Gloves — Junior", cat:"Bats", icon:"🧤", price:"₹480", badge:"",
+  {id:13, name:"Batting Gloves — Junior", cat:"Protection", icon:"🧤", price:"₹480", badge:"",
+   images:[],
    desc:"Lightweight batting gloves for young players. Adequate finger protection with comfortable fit. Available in small and medium sizes.",
    specs:{Size:"Junior (S / M)", Material:"PU leather", Padding:"Single-layer foam", Wrist:"Velcro strap"}},
 
   {id:14, name:"Wicket Keeping Gloves", cat:"Protection", icon:"🥊", price:"₹1,200", badge:"",
+   images:[],
    desc:"Professional wicket-keeping gloves with webbing between forefinger and thumb. Extra-thick palm padding for high-velocity catches. Inner gloves included.",
    specs:{Type:"Keeping gloves", Palm:"Extra foam padded", Webbing:"Inswing webbing", Inner:"Chamois inner gloves", Size:"Senior / Junior"}},
 
   {id:15, name:"Thigh Pad", cat:"Protection", icon:"🦺", price:"₹380", badge:"",
+   images:[],
    desc:"Contoured thigh guard with high-density EVA foam for impact protection. Elastic straps ensure the pad stays in place during innings. Fits both left and right-handed batters.",
    specs:{Material:"EVA foam + PU shell", Side:"Ambidextrous", Strap:"Dual elastic", Size:"Senior"}},
 
   {id:16, name:"Knee Pad (Pair)", cat:"Protection", icon:"🦵", price:"₹620", badge:"Pair",
+   images:[],
    desc:"High-density knee pads for comprehensive leg protection. Anatomically shaped with a moulded outer shell and soft inner lining. Essential gear for serious batters facing fast bowling.",
    specs:{Material:"HDPE shell + foam lining", Closure:"Velcro strap", Size:"Senior / Junior", Sold:"As a pair"}},
 
   {id:17, name:"Arm Guard", cat:"Protection", icon:"💪", price:"₹280", badge:"",
+   images:[],
    desc:"Forearm protector designed to shield the elbow and lower arm from rising deliveries. Lightweight and breathable with hard-shell protection on impact zones.",
    specs:{Material:"Hard shell + mesh", Coverage:"Forearm & elbow", Strap:"Velcro x2", Size:"One size (adjustable)"}},
 
   {id:18, name:"Abdominal Guard (Box)", cat:"Protection", icon:"🛡️", price:"₹220", badge:"",
+   images:[],
    desc:"Hard-shell abdominal guard (box) for batters and wicket keepers. Anatomically shaped for comfort. Fits standard cricket trousers pocket.",
    specs:{Material:"Hard polymer", Shape:"Anatomical", Type:"Standard box", Fit:"Insert into trouser pocket"}},
 
   {id:19, name:"Helmet — Senior", cat:"Protection", icon:"⛑️", price:"₹1,850", badge:"Safety Certified",
+   images:[],
    desc:"Full protection cricket helmet with steel grill and ABS outer shell. Meets ECB safety standards. Adjustable neck guard and ventilation channels for comfort.",
    specs:{Shell:"ABS hard shell", Grill:"Steel wire", Standard:"ECB approved", Size:"Senior (adjustable 54–61cm)", Ventilation:"8 air channels"}},
 
   {id:20, name:"Helmet — Junior", cat:"Protection", icon:"⛑️", price:"₹1,100", badge:"",
+   images:[],
    desc:"Lightweight junior cricket helmet with full grill protection. Designed for players aged 8–14. Meets safety standards for youth cricket.",
    specs:{Shell:"ABS hard shell", Grill:"Steel wire", Size:"Junior (52–56cm)", Age:"8 – 14 years", Standard:"Safety certified"}},
 
-  // ACCESSORIES
   {id:21, name:"Cricket Bag — Kit Bag (Duffle)", cat:"Accessories", icon:"🎒", price:"₹1,450", badge:"",
+   images:[],
    desc:"Large duffle-style cricket kit bag with separate bat sleeve, shoe compartment, and multiple organiser pockets. Reinforced base and padded shoulder straps for comfortable carry.",
-   specs:{Type:"Duffle kit bag", Bat Slots:"2 bat slots", Extra:"Shoe compartment, side pockets", Strap:"Padded shoulder + carry handles"}},
+   specs:{Type:"Duffle kit bag", "Bat Slots":"2 bat slots", Extra:"Shoe compartment, side pockets", Strap:"Padded shoulder + carry handles"}},
 
   {id:22, name:"Cricket Bag — Wheelie Bag", cat:"Accessories", icon:"🧳", price:"₹2,800", badge:"Popular",
+   images:[],
    desc:"Professional wheelie cricket bag with multi-compartment layout. Perfect for club and travelling cricketers. Heavy-duty wheels and telescoping handle.",
    specs:{Type:"Wheelie bag", Capacity:"Large (holds full kit)", Compartments:"4 main + 2 side", Wheels:"Heavy-duty inline", Handle:"Telescoping"}},
 
   {id:23, name:"Batting Pads — Senior", cat:"Protection", icon:"🦿", price:"₹1,100", badge:"",
+   images:[],
    desc:"Full-length batting leg guards with multi-density foam and a contoured knee roll. Lightweight exterior shell with internal foam channels. Secure velcro straps at ankle, calf, and thigh.",
    specs:{Material:"PU shell + foam", Size:"Senior", Straps:"3-strap velcro", Side:"Right-hand / Left-hand", Weight:"~700g per pad"}},
 
   {id:24, name:"Batting Pads — Junior", cat:"Protection", icon:"🦿", price:"₹680", badge:"",
+   images:[],
    desc:"Lightweight leg guards for junior cricketers. Adequate protection with easy-to-fasten straps.",
    specs:{Material:"PU shell + foam", Size:"Junior", Straps:"2-strap velcro", Age:"8 – 14 years"}},
 
   {id:25, name:"Batting Grip (Replacement)", cat:"Accessories", icon:"🟩", price:"₹60", badge:"",
+   images:[],
    desc:"Standard spiral cricket bat grip made from high-tack rubber. Easy to apply without tools. Fits all standard bat handles. Sold per piece.",
    specs:{Material:"Natural rubber", Type:"Spiral/chevron", Fit:"All standard handles", Sold:"Per piece"}},
 
   {id:26, name:"Grip Cone", cat:"Accessories", icon:"🔧", price:"₹35", badge:"",
+   images:[],
    desc:"Essential tool for fitting replacement grips onto bat handles smoothly. Reusable plastic cone. Works with all standard grips.",
    specs:{Material:"Hard plastic", Reusable:"Yes", Purpose:"Grip fitting tool"}},
 
   {id:27, name:"Batting Tee", cat:"Accessories", icon:"🏳️", price:"₹180", badge:"",
+   images:[],
    desc:"Adjustable batting tee for solo batting practice. Helps develop timing and batting technique. Height-adjustable rubber tee with weighted base.",
    specs:{Height:"Adjustable 60–90 cm", Base:"Weighted rubber", Usage:"Solo batting drills", Material:"Rubber + PVC"}},
 
   {id:28, name:"Cricket Spikes — Rubber Sole", cat:"Accessories", icon:"👟", price:"₹1,250", badge:"",
+   images:[],
    desc:"Cricket shoes with moulded rubber spikes for all-surface grip. Synthetic upper with padded ankle collar. Available in sizes 6 to 12.",
    specs:{Sole:"Moulded rubber spike", Upper:"Synthetic leather", Sizes:"6 – 12", Surface:"All-purpose turf"}},
 
   {id:29, name:"Cricket Spikes — Metal Sole", cat:"Accessories", icon:"👟", price:"₹1,700", badge:"",
+   images:[],
    desc:"Professional cricket shoes with replaceable metal spikes for grass pitches. Extra ankle support and breathable mesh upper.",
    specs:{Sole:"Replaceable metal spikes", Upper:"Leather + mesh", Sizes:"6 – 12", Surface:"Grass pitches", Support:"Ankle reinforced"}},
 
-  // KITS
   {id:30, name:"Starter Cricket Kit", cat:"Kits", icon:"🎁", price:"₹3,200", badge:"Best Seller",
+   images:[],
    desc:"Complete beginner kit bundling everything a new cricketer needs. Includes a Kashmir Willow bat, 1 leather ball, batting pads, batting gloves, and a kit bag — all in one. Huge value for new players or parents buying for their kids.",
    specs:{Includes:"KW Bat, Leather Ball, Pads, Gloves, Kit Bag", Level:"Beginner / Junior", Bat:"Kashmir Willow", Bag:"Included", Value:"Save ~₹800 vs. individual"}}
 ];
 
+// ─── CARD MINI-SLIDER ────────────────────────────────────────────────────────
+const cardState = {}; // track current slide index per card
+
+function buildCardSlider(p) {
+  const imgs = p.images || [];
+  const hasImgs = imgs.length > 0;
+  const slides = hasImgs ? imgs : [null]; // null = emoji fallback
+  const total = slides.length;
+  const stateKey = p.id;
+  cardState[stateKey] = 0;
+
+  const slidesHTML = slides.map(src =>
+    src
+      ? `<div class="card-slide"><img src="${src}" alt="" onerror="this.parentElement.innerHTML='${p.icon}'"/></div>`
+      : `<div class="card-slide emoji-slide" style="background:${bgColor(p.cat)}">${p.icon}</div>`
+  ).join('');
+
+  const dotsHTML = total > 1
+    ? `<div class="card-dots">${slides.map((_,i) => `<div class="card-dot${i===0?' active':''}" id="cdot-${p.id}-${i}"></div>`).join('')}</div>`
+    : '';
+
+  const arrowsHTML = total > 1 ? `
+    <button class="card-arrow prev" onclick="event.stopPropagation();cardSlide(${p.id},-1)">&#8249;</button>
+    <button class="card-arrow next" onclick="event.stopPropagation();cardSlide(${p.id},1)">&#8250;</button>
+  ` : '';
+
+  const countHTML = total > 1 ? `<div class="card-img-count">1 / ${total}</div>` : '';
+  const badgeHTML = p.badge ? `<span class="card-badge">${p.badge}</span>` : '';
+
+  return `
+    <div class="card-img" id="cimg-${p.id}"
+      ontouchstart="tcStart(event,${p.id},'card')"
+      ontouchend="tcEnd(event,${p.id},'card')">
+      <div class="card-slides" id="cslides-${p.id}">${slidesHTML}</div>
+      ${arrowsHTML}${dotsHTML}${countHTML}${badgeHTML}
+    </div>`;
+}
+
+function cardSlide(id, dir) {
+  const p = products.find(x => x.id === id);
+  const total = (p.images && p.images.length) || 1;
+  if (total <= 1) return;
+  cardState[id] = (cardState[id] + dir + total) % total;
+  const idx = cardState[id];
+  document.getElementById(`cslides-${id}`).style.transform = `translateX(-${idx * 100}%)`;
+  // update dots
+  document.querySelectorAll(`[id^="cdot-${id}-"]`).forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+  // update counter
+  const counter = document.querySelector(`#cimg-${id} .card-img-count`);
+  if (counter) counter.textContent = `${idx + 1} / ${total}`;
+}
+
+// ─── MODAL GALLERY ───────────────────────────────────────────────────────────
+let galIdx = 0;
+let galTotal = 0;
+
+function buildGallery(p) {
+  const imgs = p.images || [];
+  const hasImgs = imgs.length > 0;
+  const slides = hasImgs ? imgs : [null];
+  galTotal = slides.length;
+  galIdx = 0;
+
+  // Track
+  document.getElementById('galleryTrack').innerHTML = slides.map(src =>
+    src
+      ? `<div class="gallery-slide"><img src="${src}" alt="${p.name}" onerror="this.parentElement.innerHTML='${p.icon}'"/></div>`
+      : `<div class="gallery-slide">${p.icon}</div>`
+  ).join('');
+  document.getElementById('galleryTrack').style.transform = 'translateX(0)';
+
+  // Dots
+  document.getElementById('gDots').innerHTML = galTotal > 1
+    ? slides.map((_,i) => `<div class="gallery-dot${i===0?' active':''}" onclick="goGallery(${i})"></div>`).join('')
+    : '';
+
+  // Thumbs
+  document.getElementById('gThumbs').innerHTML = galTotal > 1
+    ? slides.map((src, i) =>
+        src
+          ? `<div class="gallery-thumb${i===0?' active':''}" onclick="goGallery(${i})"><img src="${src}" onerror="this.parentElement.innerHTML='${p.icon}'"/></div>`
+          : `<div class="gallery-thumb${i===0?' active':''}" onclick="goGallery(${i})">${p.icon}</div>`
+      ).join('')
+    : '';
+
+  // Arrows & counter
+  document.getElementById('gPrev').style.display = galTotal > 1 ? 'flex' : 'none';
+  document.getElementById('gNext').style.display = galTotal > 1 ? 'flex' : 'none';
+  updateGalleryUI();
+}
+
+function goGallery(idx) {
+  galIdx = Math.max(0, Math.min(idx, galTotal - 1));
+  document.getElementById('galleryTrack').style.transform = `translateX(-${galIdx * 100}%)`;
+  updateGalleryUI();
+}
+
+function shiftGallery(dir) { goGallery(galIdx + dir); }
+
+function updateGalleryUI() {
+  document.getElementById('gCounter').textContent = galTotal > 1 ? `${galIdx+1} / ${galTotal}` : '';
+  document.querySelectorAll('.gallery-dot').forEach((d,i) => d.classList.toggle('active', i === galIdx));
+  document.querySelectorAll('.gallery-thumb').forEach((t,i) => t.classList.toggle('active', i === galIdx));
+  // scroll active thumb into view
+  const activeThumb = document.querySelector('.gallery-thumb.active');
+  if (activeThumb) activeThumb.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+}
+
+// ─── TOUCH / SWIPE ───────────────────────────────────────────────────────────
+let touchStartX = 0;
+let swipeTarget = null;
+let swipeId = null;
+
+function tcStart(e, id, type) { touchStartX = e.touches[0].clientX; swipeTarget = type; swipeId = id; }
+function tcEnd(e, id, type) {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) < 40) return;
+  if (type === 'card') cardSlide(id, dx < 0 ? 1 : -1);
+  if (type === 'modal') shiftGallery(dx < 0 ? 1 : -1);
+}
+
+// Add swipe to modal gallery track
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.getElementById('galleryTrack');
+  track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) shiftGallery(dx < 0 ? 1 : -1);
+  });
+  // Arrow keyboard nav inside modal
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('modalOverlay').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') shiftGallery(-1);
+    if (e.key === 'ArrowRight') shiftGallery(1);
+  });
+});
+
+// ─── GRID ────────────────────────────────────────────────────────────────────
 let currentCat = "All";
 
 function filterCat(cat, btn) {
@@ -594,7 +1103,7 @@ function filterCat(cat, btn) {
 function renderGrid() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const grid = document.getElementById('productGrid');
-  let filtered = products.filter(p =>
+  const filtered = products.filter(p =>
     (currentCat === 'All' || p.cat === currentCat) &&
     (!q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q))
   );
@@ -605,17 +1114,14 @@ function renderGrid() {
   }
 
   grid.innerHTML = filtered.map((p, i) => `
-    <div class="card" style="animation-delay:${i*0.04}s" onclick="openModal(${p.id})">
-      <div class="card-img" style="background:${bgColor(p.cat)}">
-        ${p.icon}
-        ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
-      </div>
-      <div class="card-body">
+    <div class="card" style="animation-delay:${i*0.04}s">
+      ${buildCardSlider(p)}
+      <div class="card-body" onclick="openModal(${p.id})" style="cursor:pointer">
         <div class="card-category">${p.cat}</div>
         <div class="card-name">${p.name}</div>
         <div class="card-desc">${p.desc.slice(0,90)}…</div>
         <div class="card-footer">
-          <div class="card-price">${p.price} <span>onwards</span></div>
+          ${cardPriceHTML(p)}
           <button class="card-btn">View Details</button>
         </div>
       </div>
@@ -628,18 +1134,19 @@ function bgColor(cat) {
   return map[cat] || '#f5f5f5';
 }
 
+// ─── MODAL ───────────────────────────────────────────────────────────────────
 function openModal(id) {
   const p = products.find(x => x.id === id);
-  document.getElementById('mIcon').textContent = p.icon;
-  document.getElementById('mCat').textContent = p.cat;
+  buildGallery(p);
+  document.getElementById('mCat').textContent  = p.cat;
   document.getElementById('mName').textContent = p.name;
-  document.getElementById('mPrice').textContent = p.price;
+  document.getElementById('mPrice').innerHTML  = modalPriceHTML(p);
   document.getElementById('mDesc').textContent = p.desc;
-  document.getElementById('mSpecs').innerHTML = Object.entries(p.specs)
+  document.getElementById('mSpecs').innerHTML  = Object.entries(p.specs)
     .map(([k,v]) => `<div class="spec-item"><div class="sk">${k}</div><div class="sv">${v}</div></div>`).join('');
   document.getElementById('mEnquire').onclick = () => {
-    const msg = encodeURIComponent(`Hi! I'm interested in: *${p.name}* (${p.price}). Please share more details.`);
-    window.open(`https://wa.me/917418355264?text=${msg}`, '_blank');
+    const msg = encodeURIComponent(`Hi! I'm interested in: *${p.name}* at *${enquiryPrice(p)}*. Please share more details.`);
+    window.open(`https://wa.me/+917418355264?text=${msg}`, '_blank');
   };
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -653,7 +1160,9 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('modalOverlay').classList.remove('open');
 });
 
-renderGrid();
+// ─── BOOT ─────────────────────────────────────────────────────────────────────
+// Loads config.json → applies prices & sale settings → then renders the grid
+loadConfig();
 </script>
 </body>
 </html>
